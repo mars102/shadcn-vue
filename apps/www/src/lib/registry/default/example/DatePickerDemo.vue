@@ -4,7 +4,9 @@ import {
   DateFormatter,
   type DateValue,
   getLocalTimeZone,
+  CalendarDate
 } from '@internationalized/date'
+import { toDate } from 'radix-vue/date'
 
 import { Calendar as CalendarIcon } from 'lucide-vue-next'
 import { Calendar } from '@/lib/registry/default/ui/calendar'
@@ -16,7 +18,7 @@ const df = new DateFormatter('en-US', {
   dateStyle: 'long',
 })
 
-const value = ref<DateValue>()
+const value = ref<DateValue>(new CalendarDate(2022, 2, 3))
 </script>
 
 <template>
@@ -30,7 +32,7 @@ const value = ref<DateValue>()
         )"
       >
         <CalendarIcon class="mr-2 h-4 w-4" />
-        {{ value ? df.format(value.toDate(getLocalTimeZone())) : "Pick a date" }}
+        {{ value ? df.format(toDate(value.value)) : "Pick a date" }}
       </Button>
     </PopoverTrigger>
     <PopoverContent class="w-auto p-0">
